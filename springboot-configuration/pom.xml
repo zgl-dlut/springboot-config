@@ -25,7 +25,7 @@
 		<commons-lang3.version>3.4</commons-lang3.version>
 		<commons-collections.version>3.2.2</commons-collections.version>
 		<commons-pool2.version>2.4.2</commons-pool2.version>
-		<jackson.version>2.9.8</jackson.version>
+		<jackson.version>2.10.1</jackson.version>
 		<springfox-swagger.version>2.9.2</springfox-swagger.version>
 		<swagger-bootstrap-ui.version>1.9.3</swagger-bootstrap-ui.version>
 	</properties>
