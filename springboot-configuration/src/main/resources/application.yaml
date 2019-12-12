@@ -1,60 +1,56 @@
 server:
   port: 8848
   servlet:
-      context-path: /
+    context-path: /
 
 spring:
   datasource:
-      type: com.alibaba.druid.pool.DruidDataSource
-      druid:
-        driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/ssm?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-        username: root
-        password: root
-        max-active: 100
-        initial-size: 1
-        max-wait: 60000
-        min-idle: 1
-        time-between-eviction-runs-millis: 60000
-        min-evictable-idle-time-millis: 300000
-        validation-query: select 'x'
-        test-while-idle: true
-        test-on-borrow: false
-        test-on-return: false
-        pool-prepared-statements: true
-        max-open-prepared-statements: 20
-        use-global-data-source-stat: true
-        filters: stat,log4j2
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/ssm?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: root
+      max-active: 100
+      initial-size: 1
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      use-global-data-source-stat: true
+      filters: stat,log4j2
   redis:
-      database: 6
-      host: 127.0.0.1
-      port: 6379
-      timeout: 10000ms
-      password:
-      lettuce:
-        pool:
-          max-active: 100
-          max-wait: 500ms
-          max-idle: 500
-          min-idle: 0
+    database: 6
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000ms
+    password:
+    key-prefix: zgl-
+    command-timeout: 2s
+    default-ttl: 60s
+    ttl:
+      getEmpAuth: 1800s
+    lettuce:
+      pool:
+        max-active: 100
+        max-wait: 500ms
+        max-idle: 500
+        min-idle: 0
   rabbitmq:
-          username: guest
-          password: guest
-          connection-timeout: 20s
-          host: 127.0.0.1
-          port: 5672
-          virtual-host: /
-          publisher-confirms: true
-          publisher-returns: true
-          listener:
-              simple:
-                  acknowledge-mode: manual
-                  concurrency: 10
-                  max-concurrency: 10
-                  prefetch: 1
-          template:
-              reply-timeout: 10s
-
+    username: guest
+    password: guest
+    connection-timeout: 20s
+    host: 127.0.0.1
+    port: 5672
+    virtual-host: /
+    publisher-confirms: true
+    publisher-returns: true
 
 mybatis:
   type-aliases-package: com.zgl.springboot.domain

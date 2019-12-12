@@ -2,7 +2,7 @@ package com.zgl.springboot.configuration;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -34,6 +34,12 @@ public class AmqpConfiguration {
 
 	private String virtualHost;
 
+	private String queueName = "zgl-queue";
+
+	private String routingKey = "zgl-key";
+
+	private String exchangeName = "zgl-exchange";
+
 	/**
 	 * 可以不用写
 	 */
@@ -49,6 +55,23 @@ public class AmqpConfiguration {
 	}
 
 	@Bean
+	public Queue zglQueue() {
+		log.info("mq队列初始化");
+		return new Queue(queueName, true);
+	}
+
+	@Bean
+	public DirectExchange zglExchange() {
+		log.info("mq交换机初始化");
+		return new DirectExchange(exchangeName, true, false);
+	}
+
+	@Bean
+	public Binding bindingQueue() {
+		return BindingBuilder.bind(zglQueue()).to(zglExchange()).with(routingKey);
+	}
+
+	@Bean
 	public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
 		return new RabbitAdmin(connectionFactory);
 	}
@@ -58,6 +81,7 @@ public class AmqpConfiguration {
 	public RabbitTemplate rabbitTemplate() {
 		RabbitTemplate template = new RabbitTemplate(connectionFactory());
 		template.setConfirmCallback((CorrelationData correlationData, boolean ack, String cause) -> {
+			log.info("消息投入到交换机id:{}", correlationData.getId());
 			if (!ack) {
 				log.error("Fail to send message to exchange!");
 			}
@@ -67,4 +91,5 @@ public class AmqpConfiguration {
 		template.setMandatory(true);
 		return template;
 	}
+
 }
