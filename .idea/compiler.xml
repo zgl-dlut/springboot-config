@@ -6,10 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mq-consumer" />
+        <module name="springboot-common" />
         <module name="springboot-configuration" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="mq-consumer" target="1.8" />
+      <module name="springboot-common" target="1.8" />
       <module name="springboot-configuration" target="1.8" />
     </bytecodeTargetLevel>
   </component>

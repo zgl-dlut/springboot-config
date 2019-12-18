@@ -8,7 +8,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/ssm?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      url: jdbc:mysql://localhost:3306/ssm?characterEncoding=utf-8
       username: root
       password: root
       max-active: 100
@@ -52,19 +52,16 @@ spring:
     publisher-confirms: true
     publisher-returns: true
 
-mybatis:
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
   type-aliases-package: com.zgl.springboot.domain
-  mapper-locations: classpath*:mapper/*.xml
+  global-config:
+    db-config:
+      table-underline: true
+  configuration:
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: 'null'
 
-mapper:
-  mappers: com.zgl.springboot.mapper.BaseMapper
-  identity: MYSQL
-  not-empty: false
-
-pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
 
 
