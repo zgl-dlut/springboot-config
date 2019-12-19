@@ -1,14 +1,18 @@
 package com.zgl.springboot.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zgl.springboot.domain.Message;
 import com.zgl.springboot.mapper.MessageMapper;
 import com.zgl.springboot.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -23,6 +27,10 @@ import java.util.concurrent.CompletableFuture;
 @Service
 @Slf4j
 public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> implements MessageService {
+
+	@Autowired
+	private MessageMapper messageMapper;
+
 	@Override
 	public void batchInsertMessage(int count) {
 		int taskCount = this.getBatchTaskCount(count);
@@ -39,6 +47,9 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
 		return size / 100 + (size % 100 == 0 ? 0 : 1);
 	}
 	private int getLastTaskNum(int taskCount, int taskSize) {
+		if (taskSize == 100 && taskCount == 1) {
+			return taskSize;
+		}
 		return taskCount == 1 ? taskSize % 100 : taskSize - 100 * (taskCount - 1);
 	}
 
@@ -46,11 +57,22 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
 		List<Message> messageList = new ArrayList<>();
 		int createNum = taskNum == null ? 100 : taskNum;
 		for (int i = 0; i < createNum; i++) {
-			Message message =  Message.builder().age(i).name("zgl" + i).sex(1).created(LocalDate.now()).build();
+			Message message =  Message.builder().age(i).name("zgl" + i).sex(1).created(new Date()).build();
 			messageList.add(message);
 		}
 		this.saveBatch(messageList);
 	}
+
+	@Override
+	public List<Message> queryMessageList(int count) {
+		List<Message> messageList = new ArrayList<>();
+		for (int i = 0; i < count; i++) {
+			messageList.add(messageMapper.getOneByAge(i));
+		}
+		messageList.sort(((o1, o2) -> o2.getAge() - o1.getAge()));
+		return messageList;
+	}
+
 	public static void main(String[] args) {
 		int count = 99;
 		int count1 = 301;

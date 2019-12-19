@@ -1,16 +1,14 @@
-package com.zgl.springboot.domain;
+package com.zgl.mybatis.plus.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
-import lombok.Builder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * <p>
@@ -24,7 +22,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="Message对象", description="")
-@Builder
 public class Message implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -38,7 +35,7 @@ public class Message implements Serializable {
 
     private Integer age;
 
-    private Date created;
+    private LocalDate created;
 
 
 }

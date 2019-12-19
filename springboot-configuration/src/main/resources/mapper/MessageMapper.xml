@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zgl.springboot.mapper.MessageMapper">
 
+	<select id="getOneByAge" parameterType="int" resultType="com.zgl.springboot.domain.Message">
+		select * from message where age = #{age} limit 1
+	</select>
 </mapper>

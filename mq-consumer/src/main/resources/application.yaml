@@ -1,0 +1,18 @@
+server:
+  port: 8858
+  servlet:
+    context-path: /
+
+spring:
+  redis:
+    database: 6
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000ms
+    password:
+    lettuce:
+      pool:
+        max-active: 100
+        max-wait: 500ms
+        max-idle: 500
+        min-idle: 0
